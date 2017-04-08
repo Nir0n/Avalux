@@ -16,23 +16,45 @@ import UIKit
 import DigitsKit
 
 class SignInViewController: UIViewController {
+//    @IBOutlet weak var anchorView: UIView!
+//    
+//    @IBOutlet weak var facebookButton: UIButton!
+//    
+//    // Support code for Google provider UI.
+//    @IBOutlet weak var googleButton: UIButton!
+//    
+//    // Support code for custom sign-in provider UI.
+//    @IBOutlet weak var customProviderButton: UIButton!
+//    @IBOutlet weak var customCreateAccountButton: UIButton!
+//    @IBOutlet weak var customForgotPasswordButton: UIButton!
+//    @IBOutlet weak var customUserIdField: UITextField!
+//    @IBOutlet weak var customPasswordField: UITextField!
+//    @IBOutlet weak var leftHorizontalBar: UIView!
+//    @IBOutlet weak var rightHorizontalBar: UIView!
+//    @IBOutlet weak var orSignInWithLabel: UIView!
+
        override func viewDidLoad() {
         super.viewDidLoad()
-        let authButton = DGTAuthenticateButton(authenticationCompletion: { (session: DGTSession?, error: NSError?) in
+        
+        let authButton = DGTAuthenticateButton(authenticationCompletion: { [unowned self] (session: DGTSession?, error: Error?) in
             if (session != nil) {
                 // TODO: associate the session userID with your user model
                 let message = "Phone number: \(session!.phoneNumber)"
-                let alertController = UIAlertController(title: "You are logged in!", message: message, preferredStyle: .Alert)
-                alertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: .None))
-                self.presentViewController(alertController, animated: true, completion: .None)
+                
+                let alertController = UIAlertController(title: "You are logged in!", message: message, preferredStyle: .alert)
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                
+                self.present(alertController, animated: true, completion: nil)
             } else {
-                NSLog("Authentication error: %@", error!.localizedDescription)
+                print("Authentication error: \(error!.localizedDescription)")
             }
         })
-        authButton.center = self.view.center
-        self.view.addSubview(authButton)
-
-            }
+        
+        if let button = authButton {
+            button.center = view.center
+            view.addSubview(button)
+        }
+    }
 }
 
 
